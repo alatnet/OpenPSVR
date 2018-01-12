@@ -52,6 +52,8 @@ openpsvr
         └── settings
             └── default.vrsettings
 ```
+Note! You must have at least WinUSB or Libusb drivers installed on the PS VR Control and PS VR Sensors devices in the device manager.  
+libpsvr provides information on how to do this.
 
 #### Linux
 TBD  
