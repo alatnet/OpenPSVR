@@ -1,0 +1,28 @@
+{
+	"jsonid" : "vrresources",
+	"statusicons" : {
+    "HMD": {
+      "Prop_NamedIconPathDeviceOff_String": "{openpsvr}/icons/psvr_off.png",
+      "Prop_NamedIconPathDeviceReady_String": "{openpsvr}/icons/psvr_ready.png",
+      "Prop_NamedIconPathDeviceNotReady_String": "{openpsvr}/icons/psvr_error.png",
+      "Prop_NamedIconPathDeviceStandby_String": "{openpsvr}/icons/psvr_standby.png",
+
+      "Prop_NamedIconPathDeviceReadyAlert_String": "{openpsvr}/icons/headset_sample_status_ready_alert.png",
+      "Prop_NamedIconPathDeviceSearching_String": "{openpsvr}/icons/headset_sample_status_searching.gif",
+      "Prop_NamedIconPathDeviceSearchingAlert_String": "{openpsvr}/icons/headset_sample_status_searching_alert.gif",
+      "Prop_NamedIconPathDeviceAlertLow_String": "{openpsvr}/icons/headset_sample_status_ready_low.png"
+    },
+
+    "Model-v Defaults": {
+      "Alias": "HMD"
+    },
+
+    "Model-v1.0": {
+      "Alias": "Model-v Defaults"
+    },
+
+    "Model-v2.0": {
+      "Alias": "Model-v1.0"
+    }
+    }	    
+}

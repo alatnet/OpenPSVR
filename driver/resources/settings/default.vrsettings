@@ -1,0 +1,7 @@
+{
+  "openpsvr": {
+    "enable": true,
+    "secondsFromVsyncToPhotons": 0.011,
+    "displayFrequency": 120
+  }
+}

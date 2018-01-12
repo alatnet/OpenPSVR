@@ -1,0 +1,12 @@
+{
+  "name": "openpsvr",
+  "directory": "",
+  "resourceOnly": false,
+
+  "hmd_presence": [
+    "054C.09AF"
+  ],
+  "other_presence": [
+    "D94D.B403"
+  ]
+}
