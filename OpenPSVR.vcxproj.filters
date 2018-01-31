@@ -36,8 +36,17 @@
     <ClCompile Include="src\OpenPSVRDeviceDriver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MahonyAHRS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\MadgwickAHRS.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BMI055Integrator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BMI055MadgwickAHRS.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,7 +65,16 @@
     <ClInclude Include="src\ServerDriver_OpenPSVR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MadgwickAHRS.hpp">
+    <ClInclude Include="src\MahonyAHRS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MadgwickAHRS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BMI055Integrator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BMI055MadgwickAHRS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

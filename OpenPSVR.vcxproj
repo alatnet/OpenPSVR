@@ -19,17 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\BMI055Integrator.cpp" />
+    <ClCompile Include="src\BMI055MadgwickAHRS.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\driverlog.cpp" />
     <ClCompile Include="src\MadgwickAHRS.cpp" />
+    <ClCompile Include="src\MahonyAHRS.cpp" />
     <ClCompile Include="src\OpenPSVR.cpp" />
     <ClCompile Include="src\OpenPSVRDeviceDriver.cpp" />
     <ClCompile Include="src\ServerDriver_OpenPSVR.cpp" />
     <ClCompile Include="src\WatchdogDriver_OpenPSVR.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BMI055Integrator.h" />
+    <ClInclude Include="src\BMI055MadgwickAHRS.h" />
     <ClInclude Include="src\driverlog.h" />
-    <ClInclude Include="src\MadgwickAHRS.hpp" />
+    <ClInclude Include="src\MadgwickAHRS.h" />
+    <ClInclude Include="src\MahonyAHRS.h" />
     <ClInclude Include="src\OpenPSVR.h" />
     <ClInclude Include="src\OpenPSVRDeviceDriver.h" />
     <ClInclude Include="src\ServerDriver_OpenPSVR.h" />

@@ -14,6 +14,11 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <gtx/euler_angles.hpp>
 
+#include "MahonyAHRS.h"
+#include "MadgwickAHRS.h"
+
+#include "BMI055Integrator.h"
+
 using namespace vr;
 
 class COpenPSVRDeviceDriver : public vr::ITrackedDeviceServerDriver, public vr::IVRDisplayComponent {
@@ -93,6 +98,12 @@ private:
 	};
 
 	Timer m_poseTimer;
+	//Mahony ahrsFilter[2];
+	//Madgwick ahrsFilter[2];
+
+	//glm::vec3 angle[2];
+
+	BMI055Integrator *integrator;
 
 private:
 	inline static const glm::quat fixQuat(glm::quat quat) {

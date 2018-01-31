@@ -35,9 +35,9 @@ openpsvr
     ├── driver.vrdrivermanifest
     ├── bin
     │   ├── win32
-    │   │   └── driver_OpenPSVR.dll (be sure to have the \"driver_\" prefix)
+    │   │   └── driver_OpenPSVR.dll (be sure to have the "driver_" prefix)
     │   └── win64
-    │       └── driver_OpenPSVR.dll (be sure to have the \"driver_\" prefix)
+    │       └── driver_OpenPSVR.dll (be sure to have the "driver_" prefix)
     └── resources
         ├── driver.vrresources
         ├── icons
@@ -52,7 +52,8 @@ openpsvr
         └── settings
             └── default.vrsettings
 ```
-Note! You must have at least WinUSB or Libusb drivers installed on the PS VR Control and PS VR Sensors devices in the device manager.  
+Note! You must have at least WinUSB or Libusb drivers installed on at least the PS VR Control device in the device manager for windows.  
+The PS VR Sensors device must at least have HID drivers or the WinUSB/Libusb drivers.    
 libpsvr provides information on how to do this.
 
 #### Linux
@@ -65,8 +66,8 @@ TBD
 - Turning the PSVR On/Off
 - Setting the PSVR into VR Mode
 - Reading Sensor Data
-- Finding the monitor for the PSVR (windows only)
+- Finding the monitor for the PSVR (windows only, currently)
+- Moving the vr screen to the PSVR Monitor (be sure "activateMultipleDrivers" in your steam.vrsettings is set to true to have this work)
 
-#### What doesn't work
+#### What sort of works
 - Head tracking (generally converting the sensor data into head tracking)
-- Moving the vr screen TO the PSVR monitor...

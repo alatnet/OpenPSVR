@@ -9,7 +9,7 @@
 #include <morpheus.h>
 
 //#include "BMI055Integrator.h"
-#include "MadgwickAHRS.hpp"
+//#include "MadgwickAHRS.hpp"
 
 #if defined( _WINDOWS )
 struct MonitorEnumParam {
@@ -117,11 +117,18 @@ COpenPSVRDeviceDriver::COpenPSVRDeviceDriver(psvr_context* psvr_ctx) {
 
 	this->mp_sensorMutex = new std::mutex();
 
-	//BMI055Integrator::Init(BMI055Integrator::AScale::AFS_2G, BMI055Integrator::Gscale::GFS_2000DPS);
+	//angle[0] = glm::vec3(0.0f, 0.0f, 0.0f);
+	//angle[1] = glm::vec3(0.0f, 0.0f, 0.0f);
+
+	//ahrsFilter[0].begin(1000);
+	//ahrsFilter[1].begin(1000);
+
+	this->integrator = new BMI055Integrator(AFS_2G, GFS_2000DPS);
 }
 
 COpenPSVRDeviceDriver::~COpenPSVRDeviceDriver() {
 	delete this->mp_sensorMutex;
+	delete this->integrator;
 }
 
 EVRInitError COpenPSVRDeviceDriver::Activate(uint32_t unObjectId) {
@@ -236,24 +243,13 @@ void COpenPSVRDeviceDriver::DebugRequest(const char * pchRequest, char * pchResp
 		pchResponseBuffer[0] = 0;
 }
 
-constexpr float GFS_125DPS = (float)(0.00381f * (glm::pi<float>() / 180.0f));
-constexpr float GFS_250DPS = (float)(0.007622f * (glm::pi<float>() / 180.0f));
-constexpr float GFS_500DPS = (float)(0.01524f * (glm::pi<float>() / 180.0f));
-constexpr float GFS_1000DPS = (float)(0.03048f * (glm::pi<float>() / 180.0f));
-constexpr float GFS_2000DPS = (float)(0.06097f * (glm::pi<float>() / 180.0f));
-
-constexpr float AFS_2G = 2.0f / 2048.0f;
-constexpr float AFS_4G = 4.0f / 2048.0f;
-constexpr float AFS_8G = 8.0f / 2048.0f;
-constexpr float AFS_16G = 16.0f / 2048.0f;
-
 DriverPose_t COpenPSVRDeviceDriver::GetPose() {
-	this->mp_sensorMutex->lock();
+	this->mp_sensorMutex->lock();	
 
 	DriverPose_t pose = { 0 };
 
 	pose.poseIsValid = true;
-	pose.result = /*BMI055Integrator::calibrating ? TrackingResult_Calibrating_InProgress :*/ TrackingResult_Running_OK;
+	pose.result = integrator->isCalibrating() ? TrackingResult_Calibrating_InProgress : TrackingResult_Running_OK;
 	pose.deviceIsConnected = true;
 	pose.willDriftInYaw = true;
 	pose.shouldApplyHeadModel = true;
@@ -267,11 +263,11 @@ DriverPose_t COpenPSVRDeviceDriver::GetPose() {
 	//DriverLog("%f, %f, %f - %s\n", euler.x, euler.y, euler.z, BMI055Integrator::calibrating ? "Calibrating" : "OK");
 
 	//if (BMI055Integrator::calibrating) {
-		pose.qWorldFromDriverRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
-		pose.qDriverFromHeadRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
-		pose.qRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
+		//pose.qWorldFromDriverRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
+		//pose.qDriverFromHeadRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
+		//pose.qRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
 
-		glm::vec3 gyro[2] = {
+		/*glm::vec3 gyro[2] = {
 			(GFS_2000DPS * glm::vec3(this->m_sensorFrame.s.data[0].gyro.pitch, this->m_sensorFrame.s.data[0].gyro.yaw, this->m_sensorFrame.s.data[0].gyro.roll)),
 			(GFS_2000DPS * glm::vec3(this->m_sensorFrame.s.data[1].gyro.pitch, this->m_sensorFrame.s.data[1].gyro.yaw, this->m_sensorFrame.s.data[1].gyro.roll))
 		};
@@ -279,19 +275,73 @@ DriverPose_t COpenPSVRDeviceDriver::GetPose() {
 		glm::vec3 accel[2] = {
 			AFS_2G * glm::vec3(this->m_sensorFrame.s.data[0].accel.x, this->m_sensorFrame.s.data[0].accel.y, this->m_sensorFrame.s.data[0].accel.z),
 			AFS_2G * glm::vec3(this->m_sensorFrame.s.data[1].accel.x, this->m_sensorFrame.s.data[1].accel.y, this->m_sensorFrame.s.data[1].accel.z)
+		};*/
+
+		glm::vec3 gyro[2] = {
+			glm::vec3(this->m_sensorFrame.s.data[0].gyro.pitch, this->m_sensorFrame.s.data[0].gyro.yaw, this->m_sensorFrame.s.data[0].gyro.roll),
+			glm::vec3(this->m_sensorFrame.s.data[1].gyro.pitch, this->m_sensorFrame.s.data[1].gyro.yaw, this->m_sensorFrame.s.data[1].gyro.roll)
 		};
+
+		glm::vec3 accel[2] = {
+			glm::vec3(this->m_sensorFrame.s.data[0].accel.x, this->m_sensorFrame.s.data[0].accel.y, this->m_sensorFrame.s.data[0].accel.z),
+			glm::vec3(this->m_sensorFrame.s.data[1].accel.x, this->m_sensorFrame.s.data[1].accel.y, this->m_sensorFrame.s.data[1].accel.z)
+		};
+
+		uint32_t timestamp[2] = {
+			this->m_sensorFrame.s.data[0].timestamp,
+			this->m_sensorFrame.s.data[1].timestamp
+		};
+
+		glm::vec3 euler = integrator->ParseToEuler(gyro, accel, timestamp);
+
+		//euler.z -= glm::radians(180.0f);
+
+		glm::quat filterPose = glm::quat(euler);
 		
 		//kalman filter here?
 		//fuse both sensor readings into one output
 		//madgwick update on one input.
 		//use sse for kalman filter
 
-		Madgwick::MadgwickAHRSupdateIMU(gyro[0].x, gyro[0].y, gyro[0].z, accel[0].x, accel[0].y, accel[0].z);
-		Madgwick::MadgwickAHRSupdateIMU(gyro[1].x, gyro[1].y, gyro[1].z, accel[1].x, accel[1].y, accel[1].z);
+		//Madgwick::MadgwickAHRSupdateIMU(gyro[0].x, gyro[0].y, gyro[0].z, accel[0].x, accel[0].y, accel[0].z);
+		//Madgwick::MadgwickAHRSupdateIMU(gyro[1].x, gyro[1].y, gyro[1].z, accel[1].x, accel[1].y, accel[1].z);
 
-		glm::quat madgwick = glm::quat(Madgwick::q0, Madgwick::q1, Madgwick::q2, Madgwick::q3);
+		//glm::quat madgwick = glm::quat(Madgwick::q0, Madgwick::q1, Madgwick::q2, Madgwick::q3);
 
-		//pose.qRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(madgwick.w, madgwick.x, madgwick.y, madgwick.z);
+		//for (int i = 0; i < 2; i++) {
+			//float currTime = *((float*)&(this->m_sensorFrame.s.data[i].timestamp));
+
+			//float offset = currTime - prevTime[i];
+
+			//DriverLog("CurrTime-%i: %f = offset: %f", i, currTime, offset);
+
+			//ahrsFilter[i].update(gyro[i].x, gyro[i].y, gyro[i].z, accel[i].x, accel[i].y, accel[i].z, 0.0f, 0.0f, 0.0f);
+
+			//ax, ay, az, gx*PI/180.0f, gy*PI/180.0f, gz*PI/180.0f
+		//	ahrsFilter[i].updateIMU(glm::radians(gyro[i].x), glm::radians(gyro[i].y), glm::radians(gyro[i].z), accel[i].x, accel[i].y, accel[i].z);
+			
+			//float angle = 0.98 * (angle + gyro * dt) + 0.02 * accel
+		//	angle[i].x = 0.98 * (angle[i].x + gyro[i].x * pose.poseTimeOffset) + 0.02 * accel[i].x;
+		//	angle[i].y = 0.98 * (angle[i].y + gyro[i].y * pose.poseTimeOffset) + 0.02 * accel[i].y;
+		//	angle[i].z = 0.98 * (angle[i].z + gyro[i].z * pose.poseTimeOffset) + 0.02 * accel[i].z;
+		//}
+
+		//glm::quat filterPose = glm::quat(
+		//	glm::vec3(
+		//		glm::radians(((ahrsFilter[0].getPitch() + ahrsFilter[1].getPitch()) / 2.0f)),
+		//		glm::radians(((ahrsFilter[0].getYaw() + ahrsFilter[1].getYaw()) / 2.0f)),
+		//		glm::radians(((ahrsFilter[0].getRoll() + ahrsFilter[1].getRoll()) / 2.0f))
+		//	)
+			/*glm::vec3(
+				(angle[0].x + angle[1].x) / 2.0f,
+				(angle[0].y + angle[1].y) / 2.0f,
+				(angle[0].z + angle[1].z) / 2.0f
+			)*/
+		//);
+
+		pose.qRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(filterPose.w, filterPose.x, filterPose.y, filterPose.z);
+		pose.qWorldFromDriverRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
+		pose.qDriverFromHeadRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
 	//} else {
 	//	pose.qWorldFromDriverRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
 	//	pose.qDriverFromHeadRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
