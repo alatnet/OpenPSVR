@@ -104,26 +104,26 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)3rdParty\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\include;$(ProjectDir)3rdParty\openvr\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)3rdParty\libpsvr\lib32\Debug;$(ProjectDir)3rdParty\libusb\lib32\Debug;$(ProjectDir)3rdParty\openvr\lib32;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)3rdParty\glm\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\libusb;$(ProjectDir)3rdParty\openvr\headers;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)3rdParty\libpsvr\LibPSVR\Debug\lib;$(ProjectDir)3rdParty\libusb\Win32\Debug\lib;$(ProjectDir)3rdParty\openvr\lib\win32;$(LibraryPath)</LibraryPath>
     <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)3rdParty\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\include;$(ProjectDir)3rdParty\openvr\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)3rdParty\libpsvr\lib64\Debug;$(ProjectDir)3rdParty\libusb\lib64\Debug;$(ProjectDir)3rdParty\openvr\lib64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)3rdParty\glm\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\libusb;$(ProjectDir)3rdParty\openvr\headers;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)3rdParty\libpsvr\LibPSVR\x64\Debug\lib;$(ProjectDir)3rdParty\libusb\x64\Debug\lib;$(ProjectDir)3rdParty\openvr\lib\win64;$(LibraryPath)</LibraryPath>
     <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)3rdParty\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\include;$(ProjectDir)3rdParty\openvr\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)3rdParty\libpsvr\lib32\Release;$(ProjectDir)3rdParty\libusb\lib32\Release;$(ProjectDir)3rdParty\openvr\lib32;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)3rdParty\glm\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\libusb;$(ProjectDir)3rdParty\openvr\headers;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)3rdParty\libpsvr\LibPSVR\Release\lib;$(ProjectDir)3rdParty\libusb\Win32\Release\lib;$(ProjectDir)3rdParty\openvr\lib\win32;$(LibraryPath)</LibraryPath>
     <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)3rdParty\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\include;$(ProjectDir)3rdParty\openvr\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)3rdParty\libpsvr\lib64\Release;$(ProjectDir)3rdParty\libusb\lib64\Release;$(ProjectDir)3rdParty\openvr\lib64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)3rdParty\glm\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\libusb;$(ProjectDir)3rdParty\openvr\headers;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)3rdParty\libpsvr\LibPSVR\x64\Release\lib;$(ProjectDir)3rdParty\libusb\x64\Release\lib;$(ProjectDir)3rdParty\openvr\lib\win64;$(LibraryPath)</LibraryPath>
     <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

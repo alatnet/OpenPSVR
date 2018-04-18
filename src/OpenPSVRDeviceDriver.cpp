@@ -427,7 +427,7 @@ void COpenPSVRDeviceDriver::sensorUpdate() {
 		//}
 
 		vr::VRServerDriverHost()->TrackedDevicePoseUpdated(m_unObjectId, GetPose(), sizeof(DriverPose_t));
-		vr::VRServerDriverHost()->ProximitySensorState(m_unObjectId, this->m_sensorFrame.s.status.worn);
+		//vr::VRServerDriverHost()->ProximitySensorState(m_unObjectId, this->m_sensorFrame.s.status.worn);
 		std::this_thread::yield();
 	}
 }

@@ -1,10 +1,5 @@
 ﻿# OpenPSVR
 ## Build Requirements
-- [libpsvr](https://github.com/alatnet/libpsvr)
-- [libusb](https://github.com/libusb/libusb)
-- [glm](https://glm.g-truc.net)
-- [openvr](https://github.com/ValveSoftware/openvr/)
-
 ##### Windows
 - Visual Studio
 
@@ -12,10 +7,11 @@
 - TBD
 
 ## Building OpenPSVR
-Place the libraries listed above in the 3rdParty folder.  
-Read the readme in that folder on how to place the files themselves.
-
 #### Windows
+3rd Party libraries should be automatically downloaded into the 3rdParty folder via git submodule support.  
+Make sure that libusb is built and symlinked (prefered) or copied into the 3rdParty folder of libpsvr.  
+Also make sure that libpsvr is build after libusb is symlinked/copied and built.  
+
 Open the OpenPSVR.sln file in Visual Studio.  
 Modify the paths macro in the property manager (View > Property Manager \[towards the bottom\]\{VS2017\}).  
 Batch build both the win32/x86 and x64 versions if you are running the driver on a 64 bit system, otherwise just build the win32/x86 version.  
