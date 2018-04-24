@@ -19,7 +19,12 @@ The driver should automatically install itself in the steam vr driver folder if 
 If you do not want it to automatically install, delete the command line in the project property's post-build event.
 
 #### Linux
-TBD
+Note: this is still a WIP as some Win32 specific parts need a linux equivalent coded. e.g. stricmp vs strcasecmp etc..
+1. Clone repo
+2. Initialise git submodules `git submodule update --init`
+3. Generate make files `generate.sh`
+4. Build driver `build.sh`
+
 
 ### Installation
 #### Windows
