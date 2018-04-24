@@ -74,7 +74,7 @@ COpenPSVRDeviceDriver::COpenPSVRDeviceDriver(psvr_context* psvr_ctx) {
 	//so create a random serial number for usage.
 	if (!serial_set) {
 		m_sSerialNumber = "PSVRDT";
-		for (int i = 0; i<3; i++) m_sSerialNumber += std::to_string(std::rand());
+		for (int i = 0; i < 3; i++) m_sSerialNumber += std::to_string(std::rand());
 	}
 
 	m_sModelNumber = "CUH-ZVR";
@@ -246,7 +246,7 @@ void COpenPSVRDeviceDriver::DebugRequest(const char * pchRequest, char * pchResp
 }
 
 DriverPose_t COpenPSVRDeviceDriver::GetPose() {
-	this->mp_sensorMutex->lock();	
+	this->mp_sensorMutex->lock();
 
 	DriverPose_t pose = { 0 };
 
@@ -279,71 +279,71 @@ DriverPose_t COpenPSVRDeviceDriver::GetPose() {
 			AFS_2G * glm::vec3(this->m_sensorFrame.s.data[1].accel.x, this->m_sensorFrame.s.data[1].accel.y, this->m_sensorFrame.s.data[1].accel.z)
 		};*/
 
-		glm::vec3 gyro[2] = {
-			glm::vec3(this->m_sensorFrame.s.data[0].gyro.pitch, this->m_sensorFrame.s.data[0].gyro.yaw, this->m_sensorFrame.s.data[0].gyro.roll),
-			glm::vec3(this->m_sensorFrame.s.data[1].gyro.pitch, this->m_sensorFrame.s.data[1].gyro.yaw, this->m_sensorFrame.s.data[1].gyro.roll)
-		};
+	glm::vec3 gyro[2] = {
+		glm::vec3(this->m_sensorFrame.s.data[0].gyro.pitch, this->m_sensorFrame.s.data[0].gyro.yaw, this->m_sensorFrame.s.data[0].gyro.roll),
+		glm::vec3(this->m_sensorFrame.s.data[1].gyro.pitch, this->m_sensorFrame.s.data[1].gyro.yaw, this->m_sensorFrame.s.data[1].gyro.roll)
+	};
 
-		glm::vec3 accel[2] = {
-			glm::vec3(this->m_sensorFrame.s.data[0].accel.x, this->m_sensorFrame.s.data[0].accel.y, this->m_sensorFrame.s.data[0].accel.z),
-			glm::vec3(this->m_sensorFrame.s.data[1].accel.x, this->m_sensorFrame.s.data[1].accel.y, this->m_sensorFrame.s.data[1].accel.z)
-		};
+	glm::vec3 accel[2] = {
+		glm::vec3(this->m_sensorFrame.s.data[0].accel.x, this->m_sensorFrame.s.data[0].accel.y, this->m_sensorFrame.s.data[0].accel.z),
+		glm::vec3(this->m_sensorFrame.s.data[1].accel.x, this->m_sensorFrame.s.data[1].accel.y, this->m_sensorFrame.s.data[1].accel.z)
+	};
 
-		uint32_t timestamp[2] = {
-			this->m_sensorFrame.s.data[0].timestamp,
-			this->m_sensorFrame.s.data[1].timestamp
-		};
+	uint32_t timestamp[2] = {
+		this->m_sensorFrame.s.data[0].timestamp,
+		this->m_sensorFrame.s.data[1].timestamp
+	};
 
-		glm::vec3 euler = integrator->ParseToEuler(gyro, accel, timestamp);
+	glm::vec3 euler = integrator->ParseToEuler(gyro, accel, timestamp);
 
-		//euler.z -= glm::radians(180.0f);
+	//euler.z -= glm::radians(180.0f);
 
-		glm::quat filterPose = glm::quat(euler);
-		
-		//kalman filter here?
-		//fuse both sensor readings into one output
-		//madgwick update on one input.
-		//use sse for kalman filter
+	glm::quat filterPose = glm::quat(euler);
 
-		//Madgwick::MadgwickAHRSupdateIMU(gyro[0].x, gyro[0].y, gyro[0].z, accel[0].x, accel[0].y, accel[0].z);
-		//Madgwick::MadgwickAHRSupdateIMU(gyro[1].x, gyro[1].y, gyro[1].z, accel[1].x, accel[1].y, accel[1].z);
+	//kalman filter here?
+	//fuse both sensor readings into one output
+	//madgwick update on one input.
+	//use sse for kalman filter
 
-		//glm::quat madgwick = glm::quat(Madgwick::q0, Madgwick::q1, Madgwick::q2, Madgwick::q3);
+	//Madgwick::MadgwickAHRSupdateIMU(gyro[0].x, gyro[0].y, gyro[0].z, accel[0].x, accel[0].y, accel[0].z);
+	//Madgwick::MadgwickAHRSupdateIMU(gyro[1].x, gyro[1].y, gyro[1].z, accel[1].x, accel[1].y, accel[1].z);
 
-		//for (int i = 0; i < 2; i++) {
-			//float currTime = *((float*)&(this->m_sensorFrame.s.data[i].timestamp));
+	//glm::quat madgwick = glm::quat(Madgwick::q0, Madgwick::q1, Madgwick::q2, Madgwick::q3);
 
-			//float offset = currTime - prevTime[i];
+	//for (int i = 0; i < 2; i++) {
+		//float currTime = *((float*)&(this->m_sensorFrame.s.data[i].timestamp));
 
-			//DriverLog("CurrTime-%i: %f = offset: %f", i, currTime, offset);
+		//float offset = currTime - prevTime[i];
 
-			//ahrsFilter[i].update(gyro[i].x, gyro[i].y, gyro[i].z, accel[i].x, accel[i].y, accel[i].z, 0.0f, 0.0f, 0.0f);
+		//DriverLog("CurrTime-%i: %f = offset: %f", i, currTime, offset);
 
-			//ax, ay, az, gx*PI/180.0f, gy*PI/180.0f, gz*PI/180.0f
-		//	ahrsFilter[i].updateIMU(glm::radians(gyro[i].x), glm::radians(gyro[i].y), glm::radians(gyro[i].z), accel[i].x, accel[i].y, accel[i].z);
-			
-			//float angle = 0.98 * (angle + gyro * dt) + 0.02 * accel
-		//	angle[i].x = 0.98 * (angle[i].x + gyro[i].x * pose.poseTimeOffset) + 0.02 * accel[i].x;
-		//	angle[i].y = 0.98 * (angle[i].y + gyro[i].y * pose.poseTimeOffset) + 0.02 * accel[i].y;
-		//	angle[i].z = 0.98 * (angle[i].z + gyro[i].z * pose.poseTimeOffset) + 0.02 * accel[i].z;
-		//}
+		//ahrsFilter[i].update(gyro[i].x, gyro[i].y, gyro[i].z, accel[i].x, accel[i].y, accel[i].z, 0.0f, 0.0f, 0.0f);
 
-		//glm::quat filterPose = glm::quat(
-		//	glm::vec3(
-		//		glm::radians(((ahrsFilter[0].getPitch() + ahrsFilter[1].getPitch()) / 2.0f)),
-		//		glm::radians(((ahrsFilter[0].getYaw() + ahrsFilter[1].getYaw()) / 2.0f)),
-		//		glm::radians(((ahrsFilter[0].getRoll() + ahrsFilter[1].getRoll()) / 2.0f))
-		//	)
-			/*glm::vec3(
-				(angle[0].x + angle[1].x) / 2.0f,
-				(angle[0].y + angle[1].y) / 2.0f,
-				(angle[0].z + angle[1].z) / 2.0f
-			)*/
+		//ax, ay, az, gx*PI/180.0f, gy*PI/180.0f, gz*PI/180.0f
+	//	ahrsFilter[i].updateIMU(glm::radians(gyro[i].x), glm::radians(gyro[i].y), glm::radians(gyro[i].z), accel[i].x, accel[i].y, accel[i].z);
+
+		//float angle = 0.98 * (angle + gyro * dt) + 0.02 * accel
+	//	angle[i].x = 0.98 * (angle[i].x + gyro[i].x * pose.poseTimeOffset) + 0.02 * accel[i].x;
+	//	angle[i].y = 0.98 * (angle[i].y + gyro[i].y * pose.poseTimeOffset) + 0.02 * accel[i].y;
+	//	angle[i].z = 0.98 * (angle[i].z + gyro[i].z * pose.poseTimeOffset) + 0.02 * accel[i].z;
+	//}
+
+	//glm::quat filterPose = glm::quat(
+	//	glm::vec3(
+	//		glm::radians(((ahrsFilter[0].getPitch() + ahrsFilter[1].getPitch()) / 2.0f)),
+	//		glm::radians(((ahrsFilter[0].getYaw() + ahrsFilter[1].getYaw()) / 2.0f)),
+	//		glm::radians(((ahrsFilter[0].getRoll() + ahrsFilter[1].getRoll()) / 2.0f))
+	//	)
+		/*glm::vec3(
+			(angle[0].x + angle[1].x) / 2.0f,
+			(angle[0].y + angle[1].y) / 2.0f,
+			(angle[0].z + angle[1].z) / 2.0f
+		)*/
 		//);
 
-		pose.qRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(filterPose.w, filterPose.x, filterPose.y, filterPose.z);
-		pose.qWorldFromDriverRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
-		pose.qDriverFromHeadRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
+	pose.qRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(filterPose.w, filterPose.x, filterPose.y, filterPose.z);
+	pose.qWorldFromDriverRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
+	pose.qDriverFromHeadRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
 	//} else {
 	//	pose.qWorldFromDriverRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
 	//	pose.qDriverFromHeadRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
@@ -381,7 +381,8 @@ void COpenPSVRDeviceDriver::GetEyeOutputViewport(EVREye eEye, uint32_t * pnX, ui
 
 	if (eEye == Eye_Left) {
 		*pnX = 0;
-	} else {
+	}
+	else {
 		*pnX = m_nWindowWidth / 2;
 	}
 }
@@ -494,12 +495,14 @@ void COpenPSVRDeviceDriver::FindHMDMonitor() {
 				DriverLog("--DeviceID: %s\n", mID.c_str());
 				DriverLog("--DeviceKey: %s\n", mKey.c_str());*/
 
-				std::wstring mIDW(monInfo.DeviceID);
-				std::string mID(mIDW.begin(), mIDW.end());
+				//std::wstring mIDW(monInfo.DeviceID);
+				//std::string mID(mIDW.begin(), mIDW.end());
+				std::string mID(monInfo.DeviceID);
 
 				if (mID.find("SNYB403") != std::string::npos) { //if the monitor has the string "SNYB403" in it, that's the psvr's display
-					std::wstring dNameW(dd.DeviceName);
-					std::string dName(dNameW.begin(), dNameW.end());
+					//std::wstring dNameW(dd.DeviceName);
+					//std::string dName(dNameW.begin(), dNameW.end());
+					std::string dName(dd.DeviceName);
 					param.display = dName;
 
 					DriverLog("Found PSVR Display: %s\n", dName.c_str());
@@ -511,7 +514,8 @@ void COpenPSVRDeviceDriver::FindHMDMonitor() {
 
 	if (param.display.size() != 0) {
 		EnumDisplayMonitors(NULL, NULL, MonitorEnumProc, (LPARAM)&param); //get the information about that monitor.
-	} else {
+	}
+	else {
 		DriverLog("Could not find PSVR Display.\n");
 		this->SetDisplayInfo(0, 0);
 	}
@@ -550,8 +554,9 @@ BOOL CALLBACK MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMoni
 	info.cbSize = sizeof(MONITORINFOEX);
 
 	if (GetMonitorInfo(hMonitor, &info)) { //for each monitor
-		std::wstring deviceW(info.szDevice);
-		std::string device(deviceW.begin(), deviceW.end());
+		//std::wstring deviceW(info.szDevice);
+		//std::string device(deviceW.begin(), deviceW.end());
+		std::string device(info.szDevice);
 
 		if (device.compare(param->display) == 0) { //if the monitor's name is the same as the monitor we are looking for.
 			DriverLog("Found Monitor Info: %s\n", device.c_str());

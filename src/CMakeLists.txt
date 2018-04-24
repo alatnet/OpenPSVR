@@ -4,14 +4,7 @@ cmake_minimum_required(VERSION 3.0)
 set(ROOT_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
 set(PROJECT_SRC_DIR ${ROOT_DIR}/src)
 set(TARGET_BUILD_DIR ${ROOT_DIR}/build)
-
-# 3rd Party library and header paths
 set(THIRD_PARTY ${ROOT_DIR}/3rdParty)
-set(OPENVR_INCL_DIRS ${THIRD_PARTY}/openvr/headers)
-set(GLM_INCL_DIRS ${THIRD_PARTY}/glm/glm)
-set(LIBPSVR_INCL_DIRS ${THIRD_PARTY}/libpsvr/include)
-set(LIBUSB_INCL_DIRS ${THIRD_PARTY}/libusb/libusb)
-set(OPENVR_REQ_LIBS ${THIRD_PARTY}/openvr/lib/linux64)
 
 # Set OpenPSVR's project source files
 add_library(OpenPSVR SHARED ${PROJECT_SRC_DIR}/BMI055Integrator.cpp 
@@ -34,15 +27,26 @@ add_library(OpenPSVR SHARED ${PROJECT_SRC_DIR}/BMI055Integrator.cpp
                             ${PROJECT_SRC_DIR}/WatchdogDriver_OpenPSVR.h
 )
 
-# Set OpenPSVR's required include directories
+# Set OpenPSVR's required 3rdParty include directories
+set(OPENVR_INCL_DIRS ${THIRD_PARTY}/openvr/headers)
+set(GLM_INCL_DIRS ${THIRD_PARTY}/glm/glm)
+set(LIBPSVR_INCL_DIRS ${THIRD_PARTY}/libpsvr/include)
+set(LIBUSB_INCL_DIRS ${THIRD_PARTY}/libusb/libusb)
 target_include_directories(OpenPSVR PUBLIC ${OPENVR_INCL_DIRS} 
                                            ${GLM_INCL_DIRS}
-                                           ${LIBUSB_INCL_DIRS}
                                            ${LIBPSVR_INCL_DIRS}
+										   ${LIBUSB_INCL_DIRS}
 )
 
-# Set OpenPSVR's required libraries
-target_link_libraries(OpenPSVR ${OPENVR_REQ_LIBS})
+# TODO This needs to be sorted out using Find
+# Set OpenPSVR's required 3rdParty libraries
+set(OPENVR_REQ_LIB ${THIRD_PARTY}/openvr/lib/win64/openvr_api.lib)
+set(LIBPSVR_REQ_LIB ${THIRD_PARTY}/libpsvr/LibPSVR/x64/Release/lib/LibPSVR.lib)
+set(LIBUSB_REQ_LIB ${THIRD_PARTY}/libusb/x64/Release/dll/libusb-1.0.lib)
+target_link_libraries(OpenPSVR ${OPENVR_REQ_LIB}
+                               ${LIBPSVR_REQ_LIB}
+							   ${LIBUSB_REQ_LIB}
+)
 
 # Shared architecture label used for install folder locations
 if (${CMAKE_C_SIZEOF_DATA_PTR} EQUAL 8)
@@ -89,4 +93,6 @@ install(
         DESTINATION ${TARGET_BUILD_DIR}/${ARCH_LABEL}/openpsvr/resources
         FILES_MATCHING PATTERN "*.vrsettings" 
 )
+
+#TODO - Important, must include libusb-1.0.dll with the driver_openpsvr.dll in the drivers/openpsvr/bin/<ARCH_LABEL>/
 
