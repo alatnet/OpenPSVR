@@ -4,7 +4,7 @@
 - Visual Studio
 
 ##### Linux
-- TBD
+- CMake
 
 ## Building OpenPSVR
 #### Windows
