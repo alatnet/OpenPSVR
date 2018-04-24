@@ -230,9 +230,11 @@ void COpenPSVRDeviceDriver::Deactivate() {
 void COpenPSVRDeviceDriver::EnterStandby() {}
 
 void * COpenPSVRDeviceDriver::GetComponent(const char * pchComponentNameAndVersion) {
+#if defined( _WINDOWS )
 	if (!_stricmp(pchComponentNameAndVersion, vr::IVRDisplayComponent_Version)) {
 		return (vr::IVRDisplayComponent*)this;
 	}
+#endif
 
 	// override this to add a component to a driver
 	return nullptr;
