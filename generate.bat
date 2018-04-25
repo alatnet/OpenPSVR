@@ -12,7 +12,7 @@ goto exit
 ::Function generates project files for the configured ide
 :generateProjectFiles
 @echo off
-IF NOT EXIST %PROJECT_ROOT%\vs_project mkdir %PROJECT_ROOT%\generated
+IF NOT EXIST %PROJECT_ROOT%\generated mkdir %PROJECT_ROOT%\generated
 pushd %PROJECT_ROOT%\generated
 echo "Rebuilding PSMoveSteamVRBridge Project files..."
 echo "Running cmake in %PROJECT_ROOT%"
