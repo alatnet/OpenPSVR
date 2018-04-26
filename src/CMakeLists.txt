@@ -107,9 +107,9 @@ install(
         FILES_MATCHING PATTERN "*.vrsettings" 
 )
 
-#  Copy the libusb library
+#  Copy the libusb dll
 install(
-        FILES ${LIBUSB_REQ_LIB}
+        FILES ${THIRD_PARTY}/libusb/src/libusb/MS64/dll/libusb-1.0.dll
         DESTINATION ${TARGET_BUILD_DIR}/${ARCH_LABEL}/openpsvr/bin/${ARCH_LABEL}
 )
 
