@@ -1,32 +1,38 @@
-﻿# OpenPSVR [![Build Status](https://travis-ci.org/SuperEvenSteven/OpenPSVR.svg?branch=convert-to-cmake)](https://travis-ci.org/SuperEvenSteven/OpenPSVR) [![Build status](https://ci.appveyor.com/api/projects/status/9rqyc5c3jarsqc0w?svg=true)](https://ci.appveyor.com/project/SuperEvenSteven/openpsvr) [![Snapshot download](https://img.shields.io/badge/download-snapshot-brightgreen.svg)](https://ci.appveyor.com/api/projects/SuperEvenSteven/openpsvr/artifacts/build/Win64/openpsvr/openpsvr-release.zip?branch=convert-to-cmake&job=Environment%3A+arch%3DWin64%3B+Configuration%3A+Release) 
+﻿# OpenPSVR
+This project aims to create a unified Steam OpenVR driver for the PSVR bundle allowing opensource VR developers to utilize their existing PSVR hardware for PC VR development.
+## Build Status
+Ubunut 14.04 -  Linux64: [![Build Status](https://travis-ci.org/SuperEvenSteven/OpenPSVR.svg?branch=convert-to-cmake)](https://travis-ci.org/SuperEvenSteven/OpenPSVR)  
+Windows 10 VS2017 - Win64: [![Build status](https://ci.appveyor.com/api/projects/status/9rqyc5c3jarsqc0w?svg=true)](https://ci.appveyor.com/project/SuperEvenSteven/openpsvr)   
+## Snapshot Downloads
+Last successful build from latest commit: [![Snapshot download](https://img.shields.io/badge/download-snapshot-brightgreen.svg)](https://ci.appveyor.com/api/projects/SuperEvenSteven/openpsvr/artifacts/build/Win64/openpsvr/openpsvr-release.zip?branch=convert-to-cmake&job=Environment%3A+arch%3DWin64%3B+Configuration%3A+Release) 
 ## Build Requirements
 ##### Windows
-- Visual Studio
+Install the following first:
+- [Visual Studio](https://www.visualstudio.com/vs/community/)
+- [CMake](https://cmake.org/download/) 
 
 ##### Linux
-- CMake
+Install the following first:
+- [CMake](https://cmake.org/download/)
+- [libudev-dev](https://packages.ubuntu.com/trusty/libudev-dev)
 
 ## Building OpenPSVR
 #### Windows
-3rd Party libraries should be automatically downloaded into the 3rdParty folder via git submodule support.  
-Make sure that libusb is built and symlinked (prefered) or copied into the 3rdParty folder of libpsvr.  
-Also make sure that libpsvr is build after libusb is symlinked/copied and built.  
-
-Open the OpenPSVR.sln file in Visual Studio.  
-Modify the paths macro in the property manager (View > Property Manager \[towards the bottom\]\{VS2017\}).  
-Batch build both the win32/x86 and x64 versions if you are running the driver on a 64 bit system, otherwise just build the win32/x86 version.  
-The driver should automatically install itself in the steam vr driver folder if you modified the path macros.  
-If you do not want it to automatically install, delete the command line in the project property's post-build event.
-
-#### Linux
-Note: this is still a WIP as some Win32 specific parts need a linux equivalent coded. e.g. stricmp vs strcasecmp etc..
 1. Clone repo
-2. Initialise git submodules `git submodule update --init`
-3. Generate make files `generate.sh`
+2. Install cmake
+3. Clean and Generate MS Visual Studio project `clean.bat && generate.bat`
+4. Build driver `build.bat`, you should get a 'Build Successful' message. The driver is built and ready to install.
+5. Deploy the driver locally into your local installation of SteamVR for testing `deploy.bat`
+ 
+#### Linux
+1. Clone repo
+2. Install libusbdev required to compile libusb dependency `sudo apt-get install libusbdev-deb`
+3. Clean and Generate make files `./clean.sh && ./generate.sh`
 4. Build driver `build.sh`
+5. Deploy the driver locally (TODO)
 
 
-### Installation
+### Manual Installation
 #### Windows
 If you are building the driver from the solution, it should automatically install the driver into the driver folder if you configured the macro's correctly.  
 Otherwise, copy/extract the openpsvr folder to your SteamVR\drivers folder.  
