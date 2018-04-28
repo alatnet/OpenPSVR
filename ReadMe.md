@@ -1,10 +1,18 @@
 ﻿# OpenPSVR
-This project aims to create a unified Steam OpenVR driver for the PSVR bundle allowing opensource VR developers to utilize their existing PSVR hardware for PC VR development.
+This project aims to create a unified Steam OpenVR driver for the PSVR bundle allowing opensource VR developers to utilize their existing PSVR hardware for PC VR development.  
+The following features will be added:
+* PSVR HMD support 
+* PS Move controller support
+* PS Navi controller support
+* PS DS4 controller support
+* Generic Stereoscopic camera support
+* Orientation and positional tracking
+
 ## Build Status
-Ubunut 14.04 -  Linux64: [![Build Status](https://travis-ci.org/SuperEvenSteven/OpenPSVR.svg?branch=convert-to-cmake)](https://travis-ci.org/SuperEvenSteven/OpenPSVR)  
-Windows 10 VS2017 - Win64: [![Build status](https://ci.appveyor.com/api/projects/status/9rqyc5c3jarsqc0w?svg=true)](https://ci.appveyor.com/project/SuperEvenSteven/openpsvr)   
+[![Build Status](https://travis-ci.org/SuperEvenSteven/OpenPSVR.svg?branch=convert-to-cmake)](https://travis-ci.org/SuperEvenSteven/OpenPSVR) Ubunut 14.04 -  Linux64  
+[![Build status](https://ci.appveyor.com/api/projects/status/9rqyc5c3jarsqc0w?svg=true)](https://ci.appveyor.com/project/SuperEvenSteven/openpsvr) Windows 10 VS2017 - Win64   
 ## Snapshot Downloads
-Last successful build from latest commit: [![Snapshot download](https://img.shields.io/badge/download-snapshot-brightgreen.svg)](https://ci.appveyor.com/api/projects/SuperEvenSteven/openpsvr/artifacts/build/Win64/openpsvr/openpsvr-release.zip?branch=convert-to-cmake&job=Environment%3A+arch%3DWin64%3B+Configuration%3A+Release) 
+[![Snapshot download](https://img.shields.io/badge/download-snapshot-brightgreen.svg)](https://ci.appveyor.com/api/projects/SuperEvenSteven/openpsvr/artifacts/build/Win64/openpsvr/openpsvr-release.zip?branch=convert-to-cmake&job=Environment%3A+arch%3DWin64%3B+Configuration%3A+Release) Last successful build from latest commit 
 ## Build Requirements
 ##### Windows
 Install the following first:
@@ -26,7 +34,7 @@ Install the following first:
  
 #### Linux
 1. Clone repo
-2. Install libusbdev required to compile libusb dependency `sudo apt-get install libusbdev-deb`
+2. Install libusbdev required to compile libusb dependency `sudo apt-get install libudev-deb`
 3. Clean and Generate make files `./clean.sh && ./generate.sh`
 4. Build driver `build.sh`
 5. Deploy the driver locally (TODO)
