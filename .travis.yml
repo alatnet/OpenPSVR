@@ -4,6 +4,8 @@ addons:
     packages: cmake
 before_install:
   - sudo apt-get update
-  - generate.sh
+  - cd $TRAVIS_BUILD_DIR
+  - ./clean.sh && ./generate.sh
 script:
-  - build.sh
+  - cd $TRAVIS_BUILD_DIR
+  - ./build.sh
