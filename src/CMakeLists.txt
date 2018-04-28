@@ -4,7 +4,6 @@ cmake_minimum_required(VERSION 3.0)
 set(ROOT_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
 set(PROJECT_SRC_DIR ${ROOT_DIR}/src)
 set(TARGET_BUILD_DIR ${ROOT_DIR}/build)
-set(THIRD_PARTY ${ROOT_DIR}/deps)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
 # Set OpenPSVR's project source files
@@ -35,27 +34,16 @@ add_library(OpenPSVR SHARED ${PROJECT_SRC_DIR}/BMI055Integrator.cpp
 #OpenVR references
 FIND_PACKAGE(OpenVR REQUIRED)
 
+message(${GLM_INCL_DIR})
+
 # Set OpenPSVR's required 3rdParty include directories
-set(GLM_INCL_DIR ${THIRD_PARTY}/glm/src/glm/glm)
-set(LIBPSVR_INCL_DIR ${THIRD_PARTY}/libpsvr/src/libpsvr)
-set(LIBUSB_INCL_DIR ${THIRD_PARTY}/libusb/src/libusb/include/libusb-1.0)
 target_include_directories(OpenPSVR PUBLIC ${OPENVR_INCLUDE_DIR} 
                                            ${GLM_INCL_DIR}
                                            ${LIBPSVR_INCL_DIR}
 										   ${LIBUSB_INCL_DIR}
 )
 
-#find_path(LIBUSB_INCLUDE_DIR
-#  NAMES libusb.h
-#  PATH_SUFFIXES "include" "libusb" "libusb-1.0")
-#find_library(LIBUSB_LIBRARY
-#  NAMES usb
-#  PATH_SUFFIXES "lib" "lib32" "lib64")
-    
 # Set OpenPSVR's required 3rdParty libraries
-#set(OPENVR_REQ_LIB ${THIRD_PARTY}/openvr/lib/win64/openvr_api.lib)
-set(LIBPSVR_REQ_LIB ${THIRD_PARTY}/libpsvr/src/libpsvr/libpsvr.lib)
-set(LIBUSB_REQ_LIB ${THIRD_PARTY}/libusb/src/libusb/MS64/dll/libusb-1.0.lib)
 target_link_libraries(OpenPSVR ${OPENVR_LIBRARIES}
                                ${LIBPSVR_REQ_LIB}
 							   ${LIBUSB_REQ_LIB}
@@ -109,7 +97,7 @@ install(
 
 #  Copy the libusb dll
 install(
-        FILES ${THIRD_PARTY}/libusb/src/libusb/MS64/dll/libusb-1.0.dll
+        FILES ${LIBUSB_REQ_SHARED_LIB}
         DESTINATION ${TARGET_BUILD_DIR}/${ARCH_LABEL}/openpsvr/bin/${ARCH_LABEL}
 )
 
