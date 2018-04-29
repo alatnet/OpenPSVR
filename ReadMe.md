@@ -1,10 +1,10 @@
-﻿# OpenPSVR
+﻿# OpenPSVR [![Build Status](https://travis-ci.org/SuperEvenSteven/OpenPSVR.svg?branch=convert-to-cmake)](https://travis-ci.org/SuperEvenSteven/OpenPSVR) [![Build status](https://ci.appveyor.com/api/projects/status/9rqyc5c3jarsqc0w?svg=true)](https://ci.appveyor.com/project/SuperEvenSteven/openpsvr) [![Snapshot download](https://img.shields.io/badge/download-snapshot-brightgreen.svg)](https://ci.appveyor.com/api/projects/SuperEvenSteven/openpsvr/artifacts/build/Win64/openpsvr/openpsvr-release.zip?branch=convert-to-cmake&job=Environment%3A+arch%3DWin64%3B+Configuration%3A+Release) 
 ## Build Requirements
 ##### Windows
 - Visual Studio
 
 ##### Linux
-- TBD
+- CMake
 
 ## Building OpenPSVR
 #### Windows
@@ -19,7 +19,12 @@ The driver should automatically install itself in the steam vr driver folder if 
 If you do not want it to automatically install, delete the command line in the project property's post-build event.
 
 #### Linux
-TBD
+Note: this is still a WIP as some Win32 specific parts need a linux equivalent coded. e.g. stricmp vs strcasecmp etc..
+1. Clone repo
+2. Initialise git submodules `git submodule update --init`
+3. Generate make files `generate.sh`
+4. Build driver `build.sh`
+
 
 ### Installation
 #### Windows

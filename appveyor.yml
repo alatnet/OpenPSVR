@@ -1,0 +1,57 @@
+version: '{build}'
+branches:
+  only:
+  - convert-to-cmake
+clone_folder: c:\projects\OpenPSVR
+image:
+- Visual Studio 2017
+configuration:
+- Release
+- Debug
+platform:
+- x64
+environment:
+  matrix:
+  - arch: Win64
+  # - arch: #does not work, Release|x64 not a valid target
+matrix:
+  fast_finish: true
+  
+# skip unsupported combinations
+init:
+- set arch=
+- if "%arch%"=="Win64" ( set arch= Win64)
+- echo %arch%
+- echo %APPVEYOR_BUILD_WORKER_IMAGE%
+- if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" ( set generator="Visual Studio 15 2017%arch%" )
+- if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" ( set generator="Visual Studio 14 2015%arch%" )
+- if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2013" ( set generator="Visual Studio 12 2013%arch%" )
+- echo %generator%
+
+before_build:
+- cmd: |-
+    cmake --version
+    clean.bat
+    generate.bat
+
+build_script:
+  c:\projects\OpenPSVR\build.bat
+  
+#Zip openpsvr driver release
+after_build:
+    7z a -r .\build\Win64\openpsvr\openpsvr-release.zip .\build\Win64\openpsvr\* 
+
+# Upload zip artifact
+artifacts: #
+    - path: .\build\Win64\openpsvr\openpsvr-release.zip
+      name: libpsvr
+      type: zip
+      
+only_commits:
+  files:
+    - CMakeLists.txt
+    - appveyor.yml
+    - build.bat
+    - clean.bat
+    - generate.bat
+    - src/

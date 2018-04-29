@@ -1,0 +1,11 @@
+language: cpp
+addons:
+  apt:
+    packages: cmake
+before_install:
+  - sudo apt-get update && sudo apt-get install libudev-dev
+  - cd $TRAVIS_BUILD_DIR
+  - ./clean.sh && ./generate.sh
+script:
+  - cd $TRAVIS_BUILD_DIR
+  - ./build.sh
