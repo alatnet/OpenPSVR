@@ -14,7 +14,7 @@ goto exit
 @echo off
 IF NOT EXIST %PROJECT_ROOT%\generated mkdir %PROJECT_ROOT%\generated
 pushd %PROJECT_ROOT%\generated
-echo "Rebuilding PSMoveSteamVRBridge Project files..."
+echo "Building project files..."
 echo "Running cmake in %PROJECT_ROOT%"
 cmake .. -G "Visual Studio 15 2017 Win64"
 popd
