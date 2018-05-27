@@ -1,6 +1,4 @@
-﻿Windows x64 [![Build status](https://ci.appveyor.com/api/projects/status/9rqyc5c3jarsqc0w?svg=true)](https://ci.appveyor.com/project/SuperEvenSteven/openpsvr) Ubuntu x64 [![Build Status](https://travis-ci.org/SuperEvenSteven/OpenPSVR.svg?branch=convert-to-cmake)](https://travis-ci.org/SuperEvenSteven/OpenPSVR)
-
-# OpenPSVR
+# OpenPSVR [![Build status](https://ci.appveyor.com/api/projects/status/9rqyc5c3jarsqc0w?svg=true)](https://ci.appveyor.com/project/SuperEvenSteven/openpsvr) [![Build Status](https://travis-ci.org/SuperEvenSteven/OpenPSVR.svg?branch=convert-to-cmake)](https://travis-ci.org/SuperEvenSteven/OpenPSVR)
 This project aims to create a unified Steam OpenVR driver for the PSVR bundle.
   
 The following features will be added:
@@ -135,5 +133,5 @@ The project can be built on both Windows and Ubuntu but has only been tested on 
 ### Latest Snapshot
 [![Snapshot download](https://img.shields.io/badge/download-snapshot-brightgreen.svg)](https://ci.appveyor.com/api/projects/SuperEvenSteven/openpsvr/artifacts/build/Win64/openpsvr/openpsvr-release.zip?branch=convert-to-cmake&job=Environment%3A+arch%3DWin64%3B+Configuration%3A+Release)
 
-[bitrock-logo]:https://github.com/alatnet/OpenPSVR/tree/master/installer/installer-logo.png "BitRock Installer"
+[bitrock-logo]:https://github.com/alatnet/OpenPSVR/blob/master/installer/installer-logo.png "BitRock Installer"
 [bitrock-url]:http://bitrock.com
