@@ -21,9 +21,9 @@
     #define OPENPSVR_BORLANDC
 #elif defined(__GNUC__) && (defined(__WIN32__) || defined(_WIN32))
     #define OPENPSVR_MINGW
-	#define OPENPSVR_GNUC
+    #define OPENPSVR_GNUC
 #elif defined(__GNUC__)
-	#define OPENPSVR_GNUC
+    #define OPENPSVR_GNUC
 #endif
 
 //check if we are compiling to 32 or 64 bit.
@@ -43,49 +43,57 @@
         #if defined(OPENPSVR_MINGW) || defined(OPENPSVR_VISUAL_C)
             #define OPENPSVR_DLL_DECLARE __declspec(dllexport)
             #define OPENPSVR_DLL_EXTERN extern
-			#define OPENPSVR_DLL_C_EXTERN extern "C"
+            #define OPENPSVR_DLL_C_EXTERN extern "C"
         #else
-			#define OPENPSVR_DLL_DECLARE __attribute__ ((dllexport))
+            #define OPENPSVR_DLL_DECLARE __attribute__ ((dllexport))
             #define OPENPSVR_DLL_EXTERN extern
-			#define OPENPSVR_DLL_C_EXTERN extern "C"
+            #define OPENPSVR_DLL_C_EXTERN extern "C"
         #endif
     #else
-        #ifdef TE_USE_DECLSPEC
+        #ifdef OPENPSVR_USE_DECLSPEC
             #define OPENPSVR_DLL_DECLARE __declspec(dllexport)
             #define OPENPSVR_DLL_EXTERN extern
-			#define OPENPSVR_DLL_C_EXTERN extern "C"
+            #define OPENPSVR_DLL_C_EXTERN extern "C"
         #else
-			#define OPENPSVR_DLL_DECLARE __attribute__ ((dllexport))
+            #if defined __GNUC__ && __GNUC__ >= 4
+                #define OPENPSVR_DLL_DECLARE __attribute__ ((visibility ("default")))
+            #else
+                #define OPENPSVR_DLL_DECLARE __attribute__ ((dllexport))
+            #endif
             #define OPENPSVR_DLL_EXTERN extern
-			#define OPENPSVR_DLL_C_EXTERN extern "C"
-		#endif
+            #define OPENPSVR_DLL_C_EXTERN extern "C"
+        #endif
     #endif
 #elif defined (OPENPSVR_IMPORT_DLL) || defined (OPENPSVR_IMPORT_SO) //set exports for importing a dynamic library
     #ifdef OPENPSVR_WIN_PLATFORM
         #if defined(OPENPSVR_MINGW) || defined(OPENPSVR_VISUAL_C)
             #define OPENPSVR_DLL_DECLARE __declspec(dllimport)
             #define OPENPSVR_DLL_EXTERN
-			#define OPENPSVR_DLL_C_EXTERN
+            #define OPENPSVR_DLL_C_EXTERN
         #else
-			#define OPENPSVR_DLL_DECLARE __attribute__ ((dllimport))
+            #define OPENPSVR_DLL_DECLARE __attribute__ ((dllimport))
             #define OPENPSVR_DLL_EXTERN
-			#define OPENPSVR_DLL_C_EXTERN
+            #define OPENPSVR_DLL_C_EXTERN
         #endif
     #else
-        #ifdef TE_USE_DECLSPEC
+        #ifdef OPENPSVR_USE_DECLSPEC
             #define OPENPSVR_DLL_DECLARE __declspec(dllimport)
             #define OPENPSVR_DLL_EXTERN
-			#define OPENPSVR_DLL_C_EXTERN
+            #define OPENPSVR_DLL_C_EXTERN
         #else
-			#define OPENPSVR_DLL_DECLARE __attribute__ ((dllimport))
+            #if defined __GNUC__ && __GNUC__ >= 4
+                #define OPENPSVR_DLL_DECLARE __attribute__ ((visibility ("default")))
+            #else
+                #define OPENPSVR_DLL_DECLARE __attribute__ ((dllimport))
+            #endif
             #define OPENPSVR_DLL_EXTERN
-			#define OPENPSVR_DLL_C_EXTERN
+            #define OPENPSVR_DLL_C_EXTERN
         #endif
     #endif
 #else	//don't set exports, compile to a .lib file
     #define OPENPSVR_DLL_DECLARE
     #define OPENPSVR_DLL_EXTERN
-	#define OPENPSVR_DLL_C_EXTERN
+    #define OPENPSVR_DLL_C_EXTERN
 #endif
 
 #ifdef OPENPSVR_UNICODE
