@@ -1,7 +1,7 @@
 #pragma once
 
 #include <openvr_driver.h>
-#include "driverlog.h"
+#include "../driverlog.h"
 
 #include <psvr.h>
 
@@ -14,17 +14,16 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <gtx/euler_angles.hpp>
 
-#include "MahonyAHRS.h"
-#include "MadgwickAHRS.h"
-
-#include "BMI055Integrator.h"
+#include "../Algorithms/MahonyAHRS.h"
+#include "../Algorithms/MadgwickAHRS.h"
+#include "../Algorithms/BMI055Integrator.h"
 
 using namespace vr;
 
-class COpenPSVRDeviceDriver : public vr::ITrackedDeviceServerDriver, public vr::IVRDisplayComponent {
+class COpenPSVR_HMDDeviceDriver : public vr::ITrackedDeviceServerDriver, public vr::IVRDisplayComponent {
 public:
-	COpenPSVRDeviceDriver(psvr_context* psvr_ctx);
-	virtual ~COpenPSVRDeviceDriver();
+	COpenPSVR_HMDDeviceDriver(psvr_context* psvr_ctx);
+	virtual ~COpenPSVR_HMDDeviceDriver();
 
 public:
 	// Inherited via ITrackedDeviceServerDriver

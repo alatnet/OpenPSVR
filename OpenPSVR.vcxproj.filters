@@ -16,6 +16,21 @@
     <Filter Include="Driver">
       <UniqueIdentifier>{444bb1c2-1f5f-4cdc-b13e-5d59e2d0746e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin API">
+      <UniqueIdentifier>{7bb7bcf8-6b0c-4bbb-a298-7573c5ed1cc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Algorithms">
+      <UniqueIdentifier>{13bf4912-bc41-45d3-b8e9-4a074647e3f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Algorithms">
+      <UniqueIdentifier>{e534bf18-8b0e-4a56-ae3e-46cd52241900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HMD">
+      <UniqueIdentifier>{a53f0620-1e28-467b-8487-65840e075018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HMD">
+      <UniqueIdentifier>{89e849a3-218f-4d58-a76a-6f33193b941e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp">
@@ -33,20 +48,23 @@
     <ClCompile Include="src\ServerDriver_OpenPSVR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OpenPSVRDeviceDriver.cpp">
+    <ClCompile Include="src\HMD\OpenPSVR_HMDDeviceDriver.cpp">
+      <Filter>Source Files\HMD</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DynamicLibrary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MahonyAHRS.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Algorithms\BMI055Integrator.cpp">
+      <Filter>Source Files\Algorithms</Filter>
     </ClCompile>
-    <ClCompile Include="src\MadgwickAHRS.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Algorithms\BMI055MadgwickAHRS.cpp">
+      <Filter>Source Files\Algorithms</Filter>
     </ClCompile>
-    <ClCompile Include="src\BMI055Integrator.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Algorithms\MadgwickAHRS.cpp">
+      <Filter>Source Files\Algorithms</Filter>
     </ClCompile>
-    <ClCompile Include="src\BMI055MadgwickAHRS.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Algorithms\MahonyAHRS.cpp">
+      <Filter>Source Files\Algorithms</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,23 +77,32 @@
     <ClInclude Include="src\WatchdogDriver_OpenPSVR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\OpenPSVRDeviceDriver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\ServerDriver_OpenPSVR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MahonyAHRS.h">
+    <ClInclude Include="include\OpenPSVR\CameraPluginAPI.h">
+      <Filter>Plugin API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HMD\OpenPSVR_HMDDeviceDriver.h">
+      <Filter>Header Files\HMD</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DynamicLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MadgwickAHRS.h">
+    <ClInclude Include="include\OpenPSVR\OpenPSVR_Common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\BMI055Integrator.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Algorithms\BMI055Integrator.h">
+      <Filter>Header Files\Algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="src\BMI055MadgwickAHRS.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Algorithms\BMI055MadgwickAHRS.h">
+      <Filter>Header Files\Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Algorithms\MadgwickAHRS.h">
+      <Filter>Header Files\Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Algorithms\MahonyAHRS.h">
+      <Filter>Header Files\Algorithms</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

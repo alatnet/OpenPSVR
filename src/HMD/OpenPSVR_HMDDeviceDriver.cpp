@@ -1,4 +1,4 @@
-#include "OpenPSVRDeviceDriver.h"
+#include "OpenPSVR_HMDDeviceDriver.h"
 
 #include <stdlib.h>
 #if defined( _WINDOWS )
@@ -13,7 +13,7 @@
 
 #if defined( _WINDOWS )
 struct MonitorEnumParam {
-	COpenPSVRDeviceDriver* caller;
+	COpenPSVR_HMDDeviceDriver* caller;
 	std::string display;
 };
 
@@ -31,7 +31,7 @@ static const char * const k_pch_RenderHeight_Int32 = "renderHeight";
 static const char * const k_pch_SecondsFromVsyncToPhotons_Float = "secondsFromVsyncToPhotons";
 static const char * const k_pch_DisplayFrequency_Float = "displayFrequency";
 
-COpenPSVRDeviceDriver::COpenPSVRDeviceDriver(psvr_context* psvr_ctx) {
+COpenPSVR_HMDDeviceDriver::COpenPSVR_HMDDeviceDriver(psvr_context* psvr_ctx) {
 	this->mp_sensorThread = nullptr;
 	this->mp_psvr_ctx = nullptr;
 
@@ -126,12 +126,12 @@ COpenPSVRDeviceDriver::COpenPSVRDeviceDriver(psvr_context* psvr_ctx) {
 	this->integrator = new BMI055Integrator(AFS_2G, GFS_2000DPS);
 }
 
-COpenPSVRDeviceDriver::~COpenPSVRDeviceDriver() {
+COpenPSVR_HMDDeviceDriver::~COpenPSVR_HMDDeviceDriver() {
 	delete this->mp_sensorMutex;
 	delete this->integrator;
 }
 
-EVRInitError COpenPSVRDeviceDriver::Activate(uint32_t unObjectId) {
+EVRInitError COpenPSVR_HMDDeviceDriver::Activate(uint32_t unObjectId) {
 	DriverLog("Activating PSVR Device. Index: %i\n", unObjectId);
 	m_unObjectId = unObjectId;
 	m_ulPropertyContainer = vr::VRProperties()->TrackedDeviceToPropertyContainer(m_unObjectId);
@@ -205,14 +205,14 @@ EVRInitError COpenPSVRDeviceDriver::Activate(uint32_t unObjectId) {
 
 	if (!this->mp_sensorThread) {
 		DriverLog("Starting up Sensor Thread.\n");
-		this->mp_sensorThread = new std::thread(&COpenPSVRDeviceDriver::sensorUpdate, this);
+		this->mp_sensorThread = new std::thread(&COpenPSVR_HMDDeviceDriver::sensorUpdate, this);
 	}
-	//this->mp_controlThread = new std::thread(&COpenPSVRDeviceDriver::controlUpdate, this);
+	//this->mp_controlThread = new std::thread(&COpenPSVR_HMDDeviceDriver::controlUpdate, this);
 
 	return VRInitError_None;
 }
 
-void COpenPSVRDeviceDriver::Deactivate() {
+void COpenPSVR_HMDDeviceDriver::Deactivate() {
 	DriverLog("Deactivating PSVR.\n");
 
 	//kill the sensor thread
@@ -227,9 +227,9 @@ void COpenPSVRDeviceDriver::Deactivate() {
 	m_unObjectId = vr::k_unTrackedDeviceIndexInvalid;
 }
 
-void COpenPSVRDeviceDriver::EnterStandby() {}
+void COpenPSVR_HMDDeviceDriver::EnterStandby() {}
 
-void * COpenPSVRDeviceDriver::GetComponent(const char * pchComponentNameAndVersion) {
+void * COpenPSVR_HMDDeviceDriver::GetComponent(const char * pchComponentNameAndVersion) {
 	if (!_stricmp(pchComponentNameAndVersion, vr::IVRDisplayComponent_Version)) {
 		return (vr::IVRDisplayComponent*)this;
 	}
@@ -238,12 +238,12 @@ void * COpenPSVRDeviceDriver::GetComponent(const char * pchComponentNameAndVersi
 	return nullptr;
 }
 
-void COpenPSVRDeviceDriver::DebugRequest(const char * pchRequest, char * pchResponseBuffer, uint32_t unResponseBufferSize) {
+void COpenPSVR_HMDDeviceDriver::DebugRequest(const char * pchRequest, char * pchResponseBuffer, uint32_t unResponseBufferSize) {
 	if (unResponseBufferSize >= 1)
 		pchResponseBuffer[0] = 0;
 }
 
-DriverPose_t COpenPSVRDeviceDriver::GetPose() {
+DriverPose_t COpenPSVR_HMDDeviceDriver::GetPose() {
 	this->mp_sensorMutex->lock();	
 
 	DriverPose_t pose = { 0 };
@@ -257,15 +257,15 @@ DriverPose_t COpenPSVRDeviceDriver::GetPose() {
 
 	//parse sensor data to quat
 	//glm::quat quat = BMI055Integrator::Parse((void *)&this->m_sensorFrame);
-	//glm::quat quat = COpenPSVRDeviceDriver::fixQuat(BMI055Integrator::Parse((void *)&this->m_sensorFrame));
+	//glm::quat quat = COpenPSVR_HMDDeviceDriver::fixQuat(BMI055Integrator::Parse((void *)&this->m_sensorFrame));
 	//auto euler = BMI055Integrator::ToEuler(&quat);
 
 	//DriverLog("%f, %f, %f - %s\n", euler.x, euler.y, euler.z, BMI055Integrator::calibrating ? "Calibrating" : "OK");
 
 	//if (BMI055Integrator::calibrating) {
-		//pose.qWorldFromDriverRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
-		//pose.qDriverFromHeadRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
-		//pose.qRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
+		//pose.qWorldFromDriverRotation = COpenPSVR_HMDDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
+		//pose.qDriverFromHeadRotation = COpenPSVR_HMDDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
+		//pose.qRotation = COpenPSVR_HMDDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
 
 		/*glm::vec3 gyro[2] = {
 			(GFS_2000DPS * glm::vec3(this->m_sensorFrame.s.data[0].gyro.pitch, this->m_sensorFrame.s.data[0].gyro.yaw, this->m_sensorFrame.s.data[0].gyro.roll)),
@@ -339,15 +339,15 @@ DriverPose_t COpenPSVRDeviceDriver::GetPose() {
 			)*/
 		//);
 
-		pose.qRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(filterPose.w, filterPose.x, filterPose.y, filterPose.z);
-		pose.qWorldFromDriverRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
-		pose.qDriverFromHeadRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
+		pose.qRotation = COpenPSVR_HMDDeviceDriver::HmdQuaternion_Init(filterPose.w, filterPose.x, filterPose.y, filterPose.z);
+		pose.qWorldFromDriverRotation = COpenPSVR_HMDDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
+		pose.qDriverFromHeadRotation = COpenPSVR_HMDDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
 	//} else {
-	//	pose.qWorldFromDriverRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
-	//	pose.qDriverFromHeadRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
+	//	pose.qWorldFromDriverRotation = COpenPSVR_HMDDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
+	//	pose.qDriverFromHeadRotation = COpenPSVR_HMDDeviceDriver::HmdQuaternion_Init(1, 0, 0, 0);
 		//	pose.qWorldFromDriverRotation = HmdQuaternion_Init(quat.w, quat.x, quat.y, quat.z);
 		//	pose.qDriverFromHeadRotation = HmdQuaternion_Init(quat.w, quat.x, quat.y, quat.z);
-	//	pose.qRotation = COpenPSVRDeviceDriver::HmdQuaternion_Init(quat.w, quat.x, quat.y, quat.z);
+	//	pose.qRotation = COpenPSVR_HMDDeviceDriver::HmdQuaternion_Init(quat.w, quat.x, quat.y, quat.z);
 	//}
 
 	this->mp_sensorMutex->unlock();
@@ -358,7 +358,7 @@ DriverPose_t COpenPSVRDeviceDriver::GetPose() {
 }
 
 // Inherited via IVRDisplayComponent
-void COpenPSVRDeviceDriver::GetWindowBounds(int32_t * pnX, int32_t * pnY, uint32_t * pnWidth, uint32_t * pnHeight) {
+void COpenPSVR_HMDDeviceDriver::GetWindowBounds(int32_t * pnX, int32_t * pnY, uint32_t * pnWidth, uint32_t * pnHeight) {
 	*pnX = m_nWindowX;
 	*pnY = m_nWindowY;
 	*pnWidth = m_nWindowWidth;
@@ -367,12 +367,12 @@ void COpenPSVRDeviceDriver::GetWindowBounds(int32_t * pnX, int32_t * pnY, uint32
 	DriverLog("WindowBounds: %d %d %d %d\n", m_nWindowX, m_nWindowY, m_nWindowWidth, m_nWindowHeight);
 }
 
-void COpenPSVRDeviceDriver::GetRecommendedRenderTargetSize(uint32_t * pnWidth, uint32_t * pnHeight) {
+void COpenPSVR_HMDDeviceDriver::GetRecommendedRenderTargetSize(uint32_t * pnWidth, uint32_t * pnHeight) {
 	*pnWidth = m_nRenderWidth;
 	*pnHeight = m_nRenderHeight;
 }
 
-void COpenPSVRDeviceDriver::GetEyeOutputViewport(EVREye eEye, uint32_t * pnX, uint32_t * pnY, uint32_t * pnWidth, uint32_t * pnHeight) {
+void COpenPSVR_HMDDeviceDriver::GetEyeOutputViewport(EVREye eEye, uint32_t * pnX, uint32_t * pnY, uint32_t * pnWidth, uint32_t * pnHeight) {
 	*pnY = 0;
 	*pnWidth = m_nWindowWidth / 2;
 	*pnHeight = m_nWindowHeight;
@@ -384,14 +384,14 @@ void COpenPSVRDeviceDriver::GetEyeOutputViewport(EVREye eEye, uint32_t * pnX, ui
 	}
 }
 
-void COpenPSVRDeviceDriver::GetProjectionRaw(EVREye eEye, float * pfLeft, float * pfRight, float * pfTop, float * pfBottom) {
+void COpenPSVR_HMDDeviceDriver::GetProjectionRaw(EVREye eEye, float * pfLeft, float * pfRight, float * pfTop, float * pfBottom) {
 	*pfLeft = -1.0;
 	*pfRight = 1.0;
 	*pfTop = -1.0;
 	*pfBottom = 1.0;
 }
 
-DistortionCoordinates_t COpenPSVRDeviceDriver::ComputeDistortion(EVREye eEye, float fU, float fV) {
+DistortionCoordinates_t COpenPSVR_HMDDeviceDriver::ComputeDistortion(EVREye eEye, float fU, float fV) {
 	DistortionCoordinates_t coordinates;
 	coordinates.rfBlue[0] = fU;
 	coordinates.rfBlue[1] = fV;
@@ -402,7 +402,7 @@ DistortionCoordinates_t COpenPSVRDeviceDriver::ComputeDistortion(EVREye eEye, fl
 	return coordinates;
 }
 
-void COpenPSVRDeviceDriver::RunFrame() {
+void COpenPSVR_HMDDeviceDriver::RunFrame() {
 	// In a real driver, this should happen from some pose tracking thread.
 	// The RunFrame interval is unspecified and can be very irregular if some other
 	// driver blocks it for some periodic task.
@@ -411,7 +411,7 @@ void COpenPSVRDeviceDriver::RunFrame() {
 	//}
 }
 
-void COpenPSVRDeviceDriver::sensorUpdate() {
+void COpenPSVR_HMDDeviceDriver::sensorUpdate() {
 	this->m_poseTimer.reset();
 	while (this->m_brunning) {
 		this->mp_sensorMutex->lock();
@@ -432,12 +432,12 @@ void COpenPSVRDeviceDriver::sensorUpdate() {
 	}
 }
 
-void COpenPSVRDeviceDriver::controlUpdate() {
+void COpenPSVR_HMDDeviceDriver::controlUpdate() {
 	while (this->m_brunning) {
 	}
 }
 
-void COpenPSVRDeviceDriver::FindHMDMonitor() {
+void COpenPSVR_HMDDeviceDriver::FindHMDMonitor() {
 #if defined( _WINDOWS )
 	MonitorEnumParam param;
 	param.caller = this;
@@ -519,7 +519,7 @@ void COpenPSVRDeviceDriver::FindHMDMonitor() {
 #endif
 }
 
-void COpenPSVRDeviceDriver::SetDisplayInfo(int32_t x, int32_t y, int32_t w, int32_t h) {
+void COpenPSVR_HMDDeviceDriver::SetDisplayInfo(int32_t x, int32_t y, int32_t w, int32_t h) {
 	m_nWindowX = x;
 	m_nWindowY = y;
 	m_nWindowWidth = w;
@@ -527,8 +527,8 @@ void COpenPSVRDeviceDriver::SetDisplayInfo(int32_t x, int32_t y, int32_t w, int3
 }
 
 
-void COpenPSVRDeviceDriver::Timer::reset() { beg_ = clock_::now(); }
-double COpenPSVRDeviceDriver::Timer::elapsed() const {
+void COpenPSVR_HMDDeviceDriver::Timer::reset() { beg_ = clock_::now(); }
+double COpenPSVR_HMDDeviceDriver::Timer::elapsed() const {
 	return std::chrono::duration_cast<millisecond_>
 		(clock_::now() - beg_).count();
 }

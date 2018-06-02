@@ -19,25 +19,29 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\BMI055Integrator.cpp" />
-    <ClCompile Include="src\BMI055MadgwickAHRS.cpp" />
+    <ClCompile Include="src\Algorithms\BMI055Integrator.cpp" />
+    <ClCompile Include="src\Algorithms\BMI055MadgwickAHRS.cpp" />
+    <ClCompile Include="src\Algorithms\MadgwickAHRS.cpp" />
+    <ClCompile Include="src\Algorithms\MahonyAHRS.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\driverlog.cpp" />
-    <ClCompile Include="src\MadgwickAHRS.cpp" />
-    <ClCompile Include="src\MahonyAHRS.cpp" />
+    <ClCompile Include="src\DynamicLibrary.cpp" />
+    <ClCompile Include="src\HMD\OpenPSVR_HMDDeviceDriver.cpp" />
     <ClCompile Include="src\OpenPSVR.cpp" />
-    <ClCompile Include="src\OpenPSVRDeviceDriver.cpp" />
     <ClCompile Include="src\ServerDriver_OpenPSVR.cpp" />
     <ClCompile Include="src\WatchdogDriver_OpenPSVR.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\BMI055Integrator.h" />
-    <ClInclude Include="src\BMI055MadgwickAHRS.h" />
+    <ClInclude Include="include\OpenPSVR\CameraPluginAPI.h" />
+    <ClInclude Include="include\OpenPSVR\OpenPSVR_Common.h" />
+    <ClInclude Include="src\Algorithms\BMI055Integrator.h" />
+    <ClInclude Include="src\Algorithms\BMI055MadgwickAHRS.h" />
+    <ClInclude Include="src\Algorithms\MadgwickAHRS.h" />
+    <ClInclude Include="src\Algorithms\MahonyAHRS.h" />
     <ClInclude Include="src\driverlog.h" />
-    <ClInclude Include="src\MadgwickAHRS.h" />
-    <ClInclude Include="src\MahonyAHRS.h" />
+    <ClInclude Include="src\DynamicLibrary.h" />
+    <ClInclude Include="src\HMD\OpenPSVR_HMDDeviceDriver.h" />
     <ClInclude Include="src\OpenPSVR.h" />
-    <ClInclude Include="src\OpenPSVRDeviceDriver.h" />
     <ClInclude Include="src\ServerDriver_OpenPSVR.h" />
     <ClInclude Include="src\WatchdogDriver_OpenPSVR.h" />
   </ItemGroup>
@@ -104,25 +108,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)3rdParty\glm\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\libusb;$(ProjectDir)3rdParty\openvr\headers;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)3rdParty\glm\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\libusb;$(ProjectDir)3rdParty\openvr\headers;D:\alatn\Documents\Visual Studio 2017\Projects\OpenPSVR\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)3rdParty\libpsvr\LibPSVR\Debug\lib;$(ProjectDir)3rdParty\libusb\Win32\Debug\lib;$(ProjectDir)3rdParty\openvr\lib\win32;$(LibraryPath)</LibraryPath>
     <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)3rdParty\glm\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\libusb;$(ProjectDir)3rdParty\openvr\headers;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)3rdParty\glm\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\libusb;$(ProjectDir)3rdParty\openvr\headers;D:\alatn\Documents\Visual Studio 2017\Projects\OpenPSVR\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)3rdParty\libpsvr\LibPSVR\x64\Debug\lib;$(ProjectDir)3rdParty\libusb\x64\Debug\lib;$(ProjectDir)3rdParty\openvr\lib\win64;$(LibraryPath)</LibraryPath>
     <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)3rdParty\glm\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\libusb;$(ProjectDir)3rdParty\openvr\headers;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)3rdParty\glm\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\libusb;$(ProjectDir)3rdParty\openvr\headers;D:\alatn\Documents\Visual Studio 2017\Projects\OpenPSVR\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)3rdParty\libpsvr\LibPSVR\Release\lib;$(ProjectDir)3rdParty\libusb\Win32\Release\lib;$(ProjectDir)3rdParty\openvr\lib\win32;$(LibraryPath)</LibraryPath>
     <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)3rdParty\glm\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\libusb;$(ProjectDir)3rdParty\openvr\headers;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)3rdParty\glm\glm;$(ProjectDir)3rdParty\libpsvr\include;$(ProjectDir)3rdParty\libusb\libusb;$(ProjectDir)3rdParty\openvr\headers;D:\alatn\Documents\Visual Studio 2017\Projects\OpenPSVR\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)3rdParty\libpsvr\LibPSVR\x64\Release\lib;$(ProjectDir)3rdParty\libusb\x64\Release\lib;$(ProjectDir)3rdParty\openvr\lib\win64;$(LibraryPath)</LibraryPath>
     <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
   </PropertyGroup>
@@ -132,7 +136,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;OPENPSVR_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;OPENPSVR_EXPORTS;OPENPSVR_BUILD_DLL;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
@@ -158,7 +162,7 @@ xcopy /s /i /y "$(ProjectDir)driver" "$(InstallDir)"</Command>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;OPENPSVR_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;OPENPSVR_EXPORTS;OPENPSVR_BUILD_DLL;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
@@ -186,7 +190,7 @@ xcopy /s /i /y "$(ProjectDir)driver" "$(InstallDir)"</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;OPENPSVR_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;OPENPSVR_EXPORTS;OPENPSVR_BUILD_DLL;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -215,7 +219,7 @@ xcopy /s /i /y "$(ProjectDir)driver" "$(InstallDir)"</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;OPENPSVR_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;OPENPSVR_EXPORTS;OPENPSVR_BUILD_DLL;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>

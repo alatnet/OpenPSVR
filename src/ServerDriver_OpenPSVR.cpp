@@ -35,7 +35,7 @@ EVRInitError CServerDriver_OpenPSVR::Init(IVRDriverContext * pDriverContext) {
 
 	this->mp_psvr_ctx = ctx;
 
-	m_pPSVRHmdLatest = new COpenPSVRDeviceDriver(this->mp_psvr_ctx);
+	m_pPSVRHmdLatest = new COpenPSVR_HMDDeviceDriver(this->mp_psvr_ctx);
 
 	if (!vr::VRServerDriverHost()->TrackedDeviceAdded(m_pPSVRHmdLatest->GetSerialNumber().c_str(), vr::TrackedDeviceClass_HMD, m_pPSVRHmdLatest)) {
 		DriverLog("Error adding psvr.\n");

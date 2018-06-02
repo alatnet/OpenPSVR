@@ -3,7 +3,7 @@
 
 #include <psvr.h>
 
-#include "OpenPSVRDeviceDriver.h"
+#include "HMD/OpenPSVR_HMDDeviceDriver.h"
 
 using namespace vr;
 
@@ -20,7 +20,7 @@ public:
 	virtual void EnterStandby() override;
 	virtual void LeaveStandby() override;
 private:
-	COpenPSVRDeviceDriver * m_pPSVRHmdLatest;
+	COpenPSVR_HMDDeviceDriver * m_pPSVRHmdLatest;
 
 	bool m_bEnablePSVRDriver;
 private:
