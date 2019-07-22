@@ -1,4 +1,6 @@
-# OpenPSVR [![Build status](https://ci.appveyor.com/api/projects/status/o78wh7jv4k5rim2k/branch/master?svg=true)](https://ci.appveyor.com/project/SuperEvenSteven/openpsvr) [![Build Status](https://travis-ci.org/SuperEvenSteven/OpenPSVR.svg?branch=master)](https://travis-ci.org/SuperEvenSteven/OpenPSVR)
+ [![Build status](https://ci.appveyor.com/api/projects/status/o78wh7jv4k5rim2k/branch/master?svg=true)](https://ci.appveyor.com/project/SuperEvenSteven/openpsvr) [![Build Status](https://travis-ci.org/SuperEvenSteven/OpenPSVR.svg?branch=master)](https://travis-ci.org/SuperEvenSteven/OpenPSVR)
+
+# OpenPSVR
 This project aims to create a unified Steam OpenVR driver for the PSVR bundle.
   
 The following features will be added:
