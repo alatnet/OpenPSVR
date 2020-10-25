@@ -74,7 +74,7 @@ For those comfortable with using a terminal or command prompt:
 
 ##### Linux
 1. Clone repo `git clone https://github.com/alatnet/OpenPSVR.git`
-2. Install libusbdev required to compile libusb dependency `sudo apt-get install libudev-deb`
+2. Install libusbdev required to compile libusb dependency `sudo apt-get install libudev-dev`
 3. Clean and Generate make files `./clean.sh && ./generate.sh`
 4. Build driver `build.sh`, you should get a `Build Successful` message. The driver is built and ready to install.
 5. Deploy the driver locally (TODO)
