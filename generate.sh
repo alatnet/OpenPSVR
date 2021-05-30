@@ -1,8 +1,7 @@
 #!/bin/bash
 set -eE
 ###########################################################################
-# Author: Stephen O'Hair
-#                                                                     
+# Author: Stephen O'Hair                                                                    
 # Purpose: Generates the openpsvr driver make project files for use on linux.
 ###########################################################################
 
